@@ -1,26 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Scripting.APIUpdating;
 
 public class PlayerMovment : MonoBehaviour
 {
-    public CharacterController2D characetrcontroller;
+    public CharacterController2D controller;
+    public float RunSpeed = 40f;
+    float Horizonatlmovment = 0f;
+    bool jump = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
+         Horizonatlmovment = Input.GetAxisRaw("Horizontal") * RunSpeed;
+         if(Input.GetButtonDown("Jump"))
+         {
+            jump = true;
+         }
+        //  Debug.Log(Horizonatlmovment);
         
     }
 
-    void FixUpdate()
+    void FixedUpdate()
     {
-    
-
+        controller.Move(Horizonatlmovment * Time.fixedDeltaTime, false, jump);
+        jump = false;
+        Debug.Log(Horizonatlmovment * Time.fixedDeltaTime );
+        Debug.Log(jump);
     }
 }
